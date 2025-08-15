@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linha do Tempo - Caso Clínico Ana Paula Gomes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f8ff 100%);
+            color: #00314E;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 49, 78, 0.1);
+            border: 2px solid #01BEFF;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00314E;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #56D500;
+            margin-bottom: 1rem;
+        }
+
+        .patient-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #56D500, #4BC200);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(86, 213, 0, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #56D500, #01BEFF);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 2rem 0;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .timeline-item:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 49, 78, 0.15);
+            width: 45%;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 49, 78, 0.2);
+            border-color: #01BEFF;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            margin-right: 55%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -30px;
+            border-left-color: white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -30px;
+            border-right-color: white;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #00314E;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 49, 78, 0.3);
+            z-index: 10;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00314E;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-icon {
+            width: 24px;
+            height: 24px;
+            background: #56D500;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .event-details {
+            color: #00314E;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .event-details strong {
+            color: #56D500;
+            font-weight: 600;
+        }
+
+        .cid-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #01BEFF, #0099CC);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .medication-list {
+            background: #f0f9ff;
+            border-left: 4px solid #01BEFF;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .medication-list h4 {
+            color: #00314E;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .medication-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .medication-list li {
+            padding: 0.3rem 0;
+            color: #00314E;
+        }
+
+        .medication-list li::before {
+            content: "💊";
+            margin-right: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .status-improvement {
+            background: linear-gradient(135deg, #56D500, #4BC200);
+            color: white;
+        }
+
+        .status-investigation {
+            background: linear-gradient(135deg, #01BEFF, #0099CC);
+            color: white;
+        }
+
+        .status-treatment {
+            background: linear-gradient(135deg, #00314E, #004466);
+            color: white;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+                margin-right: 0 !important;
+            }
+
+            .timeline-content::before {
+                left: -30px !important;
+                right: auto !important;
+                border-right-color: white !important;
+                border-left-color: transparent !important;
+            }
+
+            .timeline-date {
+                left: 30px;
+                transform: translate(-50%, -50%);
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .patient-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .summary-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 49, 78, 0.1);
+            border: 2px solid #56D500;
+        }
+
+        .summary-section h3 {
+            color: #00314E;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8fffe, #e8f8ff);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #56D500;
+        }
+
+        .summary-card h4 {
+            color: #00314E;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .print-button {
+            background: linear-gradient(135deg, #56D500, #4BC200);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(86, 213, 0, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(86, 213, 0, 0.4);
+            background: linear-gradient(135deg, #4BC200, #3DA000);
+        }
+
+        .print-button:active {
+            transform: translateY(0);
+        }
+
+        .print-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Estilos específicos para impressão */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 1cm;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+                font-size: 10pt;
+                line-height: 1.4;
+            }
+
+            .container {
+                max-width: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .header {
+                background: white !important;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                page-break-inside: avoid;
+                margin-bottom: 1cm;
+            }
+
+            .logo {
+                width: 80px !important;
+                margin-bottom: 0.5cm;
+            }
+
+            .header h1 {
+                font-size: 18pt !important;
+                margin-bottom: 0.3cm;
+                color: black !important;
+                text-shadow: none !important;
+            }
+
+            .header h2 {
+                font-size: 14pt !important;
+                color: #333 !important;
+                margin-bottom: 0.5cm;
+            }
+
+            .patient-info {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5cm;
+                margin-top: 0.5cm;
+            }
+
+            .info-card {
+                background: #f5f5f5 !important;
+                color: black !important;
+                padding: 0.5cm;
+                border: 1px solid #ccc;
+                box-shadow: none !important;
+            }
+
+            .print-button {
+                display: none !important;
+            }
+
+            .timeline {
+                margin: 1cm 0;
+            }
+
+            .timeline::before {
+                background: #ccc !important;
+                width: 2px;
+            }
+
+            .timeline-item {
+                margin: 0.8cm 0;
+                page-break-inside: avoid;
+                animation: none !important;
+                opacity: 1 !important;
+            }
+
+            .timeline-content {
+                background: white !important;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                padding: 0.5cm;
+                width: 42% !important;
+            }
+
+            .timeline-content:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .timeline-date {
+                background: #333 !important;
+                color: white !important;
+                padding: 0.3cm 0.5cm;
+                font-size: 9pt;
+                box-shadow: none !important;
+            }
+
+            .event-title {
+                font-size: 12pt !important;
+                color: black !important;
+                margin-bottom: 0.3cm;
+            }
+
+            .event-icon {
+                background: #ccc !important;
+                color: black !important;
+            }
+
+            .event-details {
+                color: black !important;
+                font-size: 9pt;
+                line-height: 1.3;
+            }
+
+            .event-details strong {
+                color: black !important;
+            }
+
+            .cid-tag {
+                background: #e0e0e0 !important;
+                color: black !important;
+                border: 1px solid #ccc;
+            }
+
+            .medication-list {
+                background: #f9f9f9 !important;
+                border-left: 3px solid #ccc !important;
+                padding: 0.3cm;
+                margin: 0.3cm 0;
+            }
+
+            .medication-list h4 {
+                color: black !important;
+                font-size: 10pt;
+            }
+
+            .status-badge {
+                background: #e0e0e0 !important;
+                color: black !important;
+                border: 1px solid #ccc;
+            }
+
+            .summary-section {
+                background: white !important;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                margin-top: 1cm;
+                page-break-inside: avoid;
+            }
+
+            .summary-section h3 {
+                color: black !important;
+                font-size: 14pt;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5cm;
+            }
+
+            .summary-card {
+                background: #f9f9f9 !important;
+                border: 1px solid #ccc !important;
+                border-left: 3px solid #333 !important;
+                padding: 0.5cm;
+            }
+
+            .summary-card h4 {
+                color: black !important;
+                font-size: 11pt;
+            }
+
+            .summary-card p {
+                font-size: 9pt;
+                color: black !important;
+            }
+
+            /* Quebras de página estratégicas */
+            .timeline-item:nth-child(6) {
+                page-break-before: always;
+            }
+
+            .summary-section {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://logosdown.com/wp-content/uploads/2023/08/bayer-logo-0-1536x1536.png" alt="Bayer Logo" class="logo">
+            <h1>Linha do Tempo - Caso Clínico</h1>
+            <h2>Estagiária Ana Paula Gomes</h2>
+            <div class="patient-info">
+                <div class="info-card">
+                    <strong>Local:</strong><br>Santa Cruz das Palmeiras
+                </div>
+                <div class="info-card">
+                    <strong>Data de Admissão:</strong><br>17/01/2025
+                </div>
+                <div class="info-card">
+                    <strong>Prontuário:</strong><br>Página 4 de 6
+                </div>
+            </div>
+            <button class="print-button" onclick="window.print()">
+                <span class="print-icon">🖨️</span>
+                Imprimir em A4
+            </button>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">08/05/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">📋</div>
+                        Atestado Médico - Cefaleia
+                    </div>
+                    <div class="event-details">
+                        <strong>Duração:</strong> 1 dia<br>
+                        <span class="cid-tag">CID: R51 (Cefaleia)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">16/05/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">🧠</div>
+                        TC de Crânio
+                    </div>
+                    <div class="event-details">
+                        <strong>Resultado:</strong> Sem contraste<br>
+                        • Estruturas cerebrais, ósseas e ventriculares normais<br>
+                        • Ausência de lesões expansivas ou coleções extra-axiais<br>
+                        • Cavidades paranasais e mastoides normoaeradas<br>
+                        <span class="status-badge status-improvement">✓ Exame Normal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">22/05/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">🧠</div>
+                        Atestado Psiquiátrico - TDAH
+                    </div>
+                    <div class="event-details">
+                        <strong>Duração:</strong> 14 dias<br>
+                        <span class="cid-tag">CID: F90.0 (TDAH)</span>
+                        <span class="status-badge status-treatment">Novo Diagnóstico</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">23/05/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">⚡</div>
+                        Atestado - Enxaqueca
+                    </div>
+                    <div class="event-details">
+                        <strong>Duração:</strong> 1 dia<br>
+                        <span class="cid-tag">CID: G43 (Enxaqueca)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">28/05/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">👩‍⚕️</div>
+                        Primeiro Contato de Enfermagem
+                    </div>
+                    <div class="event-details">
+                        <strong>Relatos:</strong><br>
+                        • Intensificação das crises de enxaqueca após dengue<br>
+                        • Afastamento pelo psiquiatra<br>
+                        • Sintomas: sonolência, cefaleia, tontura e dificuldade nas atividades diárias<br>
+                        
+                        <div class="medication-list">
+                            <h4>Medicamentos em uso:</h4>
+                            <ul>
+                                <li>Dicloridrato de flunarizina</li>
+                                <li>Maleato de fluvoxamina (TOC e TDAH)</li>
+                            </ul>
+                        </div>
+                        
+                        <span class="status-badge status-investigation">Programado: Neurologista + EEG</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">05/06/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">🧠</div>
+                        Atestado Neurológico
+                    </div>
+                    <div class="event-details">
+                        <strong>Duração:</strong> 15 dias<br>
+                        <span class="cid-tag">CID: G43 + F90 (TDAH)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">06/06/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">👨‍⚕️</div>
+                        Retorno com Neurologista
+                    </div>
+                    <div class="event-details">
+                        <strong>Mudanças no tratamento:</strong><br>
+                        • Flunarizina substituída por Depakene 250 mg<br>
+                        • Prescrito Cloridrato de Naratriptana<br>
+                        • Relato de esquecimentos, perda de horários de consultas<br>
+                        • Não realizou EEG e ECO<br>
+                        • ECG com alteração → encaminhada ao cardiologista<br>
+                        
+                        <div class="medication-list">
+                            <h4>Nova medicação:</h4>
+                            <ul>
+                                <li>Concerta 36 mg</li>
+                                <li>Depakene 250 mg</li>
+                                <li>Fluvoxamina 100 mg</li>
+                                <li>Celecoxibe 200 mg</li>
+                            </ul>
+                        </div>
+                        
+                        <span class="status-badge status-investigation">⚠️ Alteração no ECG</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">26/06 - 01/07</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">📞</div>
+                        Acompanhamento Telefônico
+                    </div>
+                    <div class="event-details">
+                        <strong>Evolução:</strong><br>
+                        • Relato de melhora com Depakene 250 mg/dia<br>
+                        • Mantém Fluvoxamina 100 mg/dia e Concerta 36 mg/dia<br>
+                        • Ainda não realizou EEG nem consulta com cardiologista<br>
+                        • Em acompanhamento multidisciplinar: neuropsicóloga, neurologista e psiquiatra<br>
+                        
+                        <span class="status-badge status-improvement">✓ Melhora Clínica</span>
+                        <span class="status-badge status-investigation">Pendente: EEG + Cardio</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">15/07/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">📋</div>
+                        Atestado Médico
+                    </div>
+                    <div class="event-details">
+                        <span class="cid-tag">CID: R51 (Enxaqueca)</span><br>
+                        
+                        <div class="medication-list">
+                            <h4>Esquema medicamentoso:</h4>
+                            <ul>
+                                <li><strong>Manhã:</strong> Concerta 36 mg + Fluvoxamina 100 mg</li>
+                                <li><strong>Noite:</strong> Depakene 250 mg</li>
+                                <li><strong>Em crise:</strong> Sumax 25 mg</li>
+                                <li><strong>Dor muscular:</strong> Celecoxibe 200 mg</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">24/07/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">🏢</div>
+                        Retorno ao Trabalho
+                    </div>
+                    <div class="event-details">
+                        <strong>Status:</strong> Retorno ao trabalho presencial<br>
+                        <span class="status-badge status-improvement">✓ Melhora Clínica Relatada</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">13/08/2025</div>
+                <div class="timeline-content">
+                    <div class="event-title">
+                        <div class="event-icon">📝</div>
+                        Relato da Estagiária - Investigações
+                    </div>
+                    <div class="event-details">
+                        <strong>Consultas realizadas:</strong><br>
+                        • <strong>04/08:</strong> Ortopedista (investigação escoliose lombar)<br>
+                        • <strong>06/08:</strong> Oftalmologista<br>
+                        • <strong>07/08:</strong> Exames oftalmológicos e de imagem<br>
+                        • <strong>11/08:</strong> Cardiologista (bloqueio de ramo direito incompleto)<br>
+                        
+                        <strong>Exames solicitados:</strong><br>
+                        • Holter 24h<br>
+                        • Teste ergométrico<br>
+                        • Ecodopplercardiograma<br>
+                        
+                        <strong>Próximos passos:</strong><br>
+                        • Retorno ortopedista (18/08)<br>
+                        • Consulta neurologista (21/08)<br>
+                        • Terapia 2x/semana<br>
+                        
+                        <span class="status-badge status-improvement">✓ Melhora com Medicamentos</span>
+                        <span class="status-badge status-investigation">Investigação Cardiológica</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3>Resumo do Acompanhamento Multidisciplinar</h3>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h4>🧠 Neurológico</h4>
+                    <p><strong>Diagnóstico:</strong> Enxaqueca (G43)<br>
+                    <strong>Tratamento atual:</strong> Depakene 250mg (noite)<br>
+                    <strong>Crise:</strong> Sumax 25mg<br>
+                    <strong>Status:</strong> Melhora clínica relatada</p>
+                </div>
+                
+                <div class="summary-card">
+                    <h4>🧠 Psiquiátrico</h4>
+                    <p><strong>Diagnóstico:</strong> TDAH (F90.0)<br>
+                    <strong>Tratamento:</strong> Concerta 36mg + Fluvoxamina 100mg<br>
+                    <strong>Acompanhamento:</strong> Psiquiatra + Neuropsicóloga<br>
+                    <strong>Terapia:</strong> 2x/semana</p>
+                </div>
+                
+                <div class="summary-card">
+                    <h4>❤️ Cardiológico</h4>
+                    <p><strong>Achado:</strong> Bloqueio de ramo direito incompleto<br>
+                    <strong>Investigação:</strong> Holter 24h, Teste ergométrico, Ecodoppler<br>
+                    <strong>Status:</strong> Em investigação</p>
+                </div>
+                
+                <div class="summary-card">
+                    <h4>🦴 Ortopédico</h4>
+                    <p><strong>Investigação:</strong> Escoliose lombar<br>
+                    <strong>Status:</strong> Aguardando retorno com laudos (18/08)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Adiciona interatividade aos elementos da timeline
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            // Observador para animações quando elementos entram na tela
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            timelineItems.forEach(item => {
+                observer.observe(item);
+                
+                // Adiciona efeito hover
+                item.addEventListener('mouseenter', function() {
+                    this.querySelector('.timeline-content').style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.querySelector('.timeline-content').style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Efeito de clique nos cards de medicamentos
+            const medicationLists = document.querySelectorAll('.medication-list');
+            medicationLists.forEach(list => {
+                list.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96f8949f52dcf1e1',t:'MTc1NTI1OTc0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
