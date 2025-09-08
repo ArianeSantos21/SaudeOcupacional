@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foco Pleno - Apresentação</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00314E 0%, #01BEFF 100%);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Header fixo que aparece do slide 2 em diante */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(0, 49, 78, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #56D500;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 100;
+        }
+
+        .header.show {
+            display: flex;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            color: #56D500;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header-title .tagline {
+            font-size: 0.9rem;
+            color: #01BEFF;
+            font-style: italic;
+            margin: 0;
+        }
+
+        .logo-left, .logo-right {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #56D500;
+            background: white;
+            padding: 3px;
+        }
+
+        /* Container principal */
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .slide.with-header {
+            padding-top: 120px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slide de capa */
+        .cover-slide {
+            text-align: center;
+        }
+
+        .cover-slide h1 {
+            font-size: 4.5rem;
+            color: #56D500;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cover-slide .tagline {
+            font-size: 2rem;
+            color: #01BEFF;
+            font-style: italic;
+            margin-bottom: 50px;
+        }
+
+        .cover-slide .methodology {
+            background: rgba(0, 49, 78, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #56D500;
+            max-width: 800px;
+            font-size: 1.2rem;
+        }
+
+        /* Slides de conteúdo */
+        .content-slide {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .content-box {
+            background: rgba(0, 49, 78, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #56D500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .content-box h2 {
+            font-size: 2.5rem;
+            color: #56D500;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .content-box p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .content-box ul {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .content-box li {
+            margin-bottom: 15px;
+        }
+
+        .content-box li::marker {
+            color: #56D500;
+        }
+
+        .highlight {
+            color: #56D500;
+            font-weight: bold;
+        }
+
+        .emphasis {
+            color: #01BEFF;
+            font-weight: 600;
+        }
+
+        .note-box {
+            background: rgba(1, 190, 255, 0.2);
+            border-left: 4px solid #01BEFF;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+        }
+
+        .exercise-box {
+            background: rgba(1, 190, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 2px solid #01BEFF;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .column-box {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .green-column {
+            background: rgba(86, 213, 0, 0.1);
+            border-left: 4px solid #56D500;
+        }
+
+        .blue-column {
+            background: rgba(1, 190, 255, 0.1);
+            border-left: 4px solid #01BEFF;
+        }
+
+        .emoji-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .story-box {
+            background: rgba(86, 213, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #56D500;
+            font-style: italic;
+        }
+
+        /* Download button */
+        .download-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #56D500, #01BEFF);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        /* Navegação */
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 200;
+        }
+
+        .nav-btn {
+            background: #56D500;
+            color: #00314E;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #01BEFF;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.6);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Contador de slides */
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(86, 213, 0, 0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 200;
+        }
+
+        /* Barra de progresso */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: #56D500;
+            transition: width 0.3s ease;
+            z-index: 200;
+        }
+
+        @media (max-width: 768px) {
+            .cover-slide h1 { font-size: 3rem; }
+            .cover-slide .tagline { font-size: 1.5rem; }
+            .content-box { padding: 20px; }
+            .content-box h2 { font-size: 2rem; }
+            .content-box p, .content-box ul { font-size: 1.1rem; }
+            .two-column { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Header fixo (aparece do slide 2 em diante) -->
+        <div class="header" id="header">
+            <img src="https://i.imgur.com/A0JbAuS.png" alt="Logo Esquerda" class="logo-left" onerror="this.style.display='none';">
+            <div class="header-title">
+                <h1>Foco Pleno</h1>
+                <div class="tagline">"A atenção que protege. O cuidado que transforma."</div>
+            </div>
+            <img src="https://i.imgur.com/OS4iDN7.png" alt="Logo Direita" class="logo-right" onerror="this.style.display='none';">
+        </div>
+
+        <!-- Slide 1 - Capa -->
+        <div class="slide active">
+            <div class="cover-slide">
+                <h1>Foco Pleno</h1>
+                <div class="tagline">"A atenção que protege. O cuidado que transforma."</div>
+                <div class="methodology">
+                    <strong>Uma jornada prática:</strong> Como estar presente pode transformar sua vida pessoal e profissional
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 - O que é foco pleno? -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🎯</div>
+                    <h2>O que é Foco Pleno?</h2>
+                    <p>Imagine que você está <span class="highlight">assistindo seu filme favorito</span>. Você esquece do celular, dos problemas, do tempo passando. Você está 100% ali, vivendo aquele momento.</p>
+                    
+                    <p>O <span class="emphasis">foco pleno</span> é exatamente isso: <span class="highlight">estar completamente presente</span> no que você está fazendo agora.</p>
+                    
+                    <p>Não é sobre esvaziar a mente ou virar um/a monge/monja. É sobre <span class="highlight">escolher onde colocar sua atenção</span> e ficar ali de verdade.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 - Por que nossa mente se distrai? -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🧠</div>
+                    <h2>Por que Nossa Mente "Voa"?</h2>
+                    <p>Nosso cérebro foi <span class="highlight">programado para sobreviver</span>, não para se concentrar. Ele está sempre:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Procurando perigos:</strong> "E se acontecer isso ou aquilo?"</li>
+                        <li><strong class="highlight">Lembrando do passado:</strong> "Nossa, como eu fui burro/a naquela situação..."</li>
+                        <li><strong class="highlight">Planejando o futuro:</strong> "Preciso fazer isso, aquilo, mais aquilo..."</li>
+                        <li><strong class="highlight">Comparando tudo:</strong> "Fulano/a tem uma vida melhor que a minha"</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">É normal a mente fazer isso!</span> Mas podemos ensinar ela a <span class="highlight">ficar mais tempo no presente</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 - O custo da distração -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">💸</div>
+                    <h2>O Preço de Viver no "Piloto Automático"</h2>
+                    <p>Quando não estamos presentes, pagamos um preço alto:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">No trabalho:</strong> Erros bobos, retrabalho, estresse desnecessário</li>
+                        <li><strong class="highlight">Em casa:</strong> Brigas por mal-entendidos, filhos/as que se sentem ignorados/as</li>
+                        <li><strong class="highlight">Com a saúde:</strong> Comer sem perceber, não notar sinais do corpo</li>
+                        <li><strong class="highlight">Nos relacionamentos:</strong> Conversas vazias, pessoas se sentindo desvalorizadas</li>
+                        <li><strong class="highlight">Com você mesmo/a:</strong> Ansiedade, sensação de que a vida está passando</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>Você já passou por isso?</strong> Chegou em casa e não lembra da viagem? Comeu algo e não sentiu o gosto? Alguém falou com você e você teve que pedir para repetir?
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 - Como a vida pessoal afeta o trabalho -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🏠➡️🏢</div>
+                    <h2>Quando os Problemas de Casa Vão para o Trabalho</h2>
+                    <p>Você já tentou <span class="highlight">"deixar os problemas em casa"</span>? É quase impossível, né?</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Briga com o/a parceiro/a de manhã:</strong> Você fica remoendo o dia todo, erra cálculos, esquece compromissos</li>
+                        <li><strong class="highlight">Filho/a doente:</strong> Sua cabeça está no hospital, não na reunião</li>
+                        <li><strong class="highlight">Conta no vermelho:</strong> A ansiedade não deixa você se concentrar em nada</li>
+                        <li><strong class="highlight">Problema familiar:</strong> Você está fisicamente presente, mas mentalmente ausente</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>A verdade é:</strong> Somos uma pessoa só. Não dá para dividir nossa mente em compartimentos estanques. O que acontece em casa afeta o trabalho, e vice-versa.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 - Como o trabalho afeta a vida pessoal -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🏢➡️🏠</div>
+                    <h2>Quando o Trabalho Invade Sua Casa</h2>
+                    <p>O caminho contrário também acontece:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Chefe estressado/a:</strong> Você chega em casa irritado/a e desconta na família</li>
+                        <li><strong class="highlight">Prazo apertado:</strong> Você não consegue relaxar, nem no fim de semana</li>
+                        <li><strong class="highlight">Reunião que deu errado:</strong> Você fica remoendo, não consegue dormir</li>
+                        <li><strong class="highlight">Medo de ser demitido/a:</strong> A ansiedade afeta seu humor, seu sono, seus relacionamentos</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>Resultado:</strong> Você está sempre "ligado/a", nunca realmente descansa. Sua família sente que você está distante, mesmo estando ali do lado.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 - As emoções que mais atrapalham -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">😰</div>
+                    <h2>As Emoções que "Sequestram" Nossa Atenção</h2>
+                    <p>Algumas emoções são como <span class="highlight">ladrões da nossa concentração</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Ansiedade:</strong> "E se der errado? E se eu não conseguir?"</li>
+                        <li><strong class="highlight">Raiva:</strong> "Como ele/ela pôde fazer isso comigo?"</li>
+                        <li><strong class="highlight">Tristeza:</strong> "Nada dá certo na minha vida"</li>
+                        <li><strong class="highlight">Medo:</strong> "Vou ser julgado/a, vou passar vergonha"</li>
+                        <li><strong class="highlight">Culpa:</strong> "Eu deveria ter feito diferente"</li>
+                        <li><strong class="highlight">Inveja:</strong> "Por que com os/as outros/as é mais fácil?"</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">Essas emoções são normais!</span> O problema é quando elas <span class="highlight">tomam conta da nossa mente</span> e não conseguimos mais focar no que importa.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 - O ciclo vicioso -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🌀</div>
+                    <h2>O Ciclo Vicioso da Distração</h2>
+                    <p>Veja como funciona esse ciclo que nos prende:</p>
+                    
+                    <div class="exercise-box">
+                        <ol style="font-size: 1.3rem; line-height: 2;">
+                            <li><strong>Algo te incomoda</strong> (problema, emoção forte)</li>
+                            <li><strong>Você se distrai</strong> (mente vai para outro lugar)</li>
+                            <li><strong>Você erra ou esquece algo</strong> (consequência da distração)</li>
+                            <li><strong>Você se sente pior</strong> (culpa, ansiedade, raiva)</li>
+                            <li><strong>Volta para o passo 1</strong> (mais distração ainda)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="story-box">
+                        <strong>Exemplo real:</strong> Você está preocupado/a com dinheiro → se distrai na reunião → esquece de anotar algo importante → o/a chefe fica bravo/a → você fica mais ansioso/a ainda → se distrai mais...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 - Quebrando o ciclo -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🔓</div>
+                    <h2>Como Quebrar Esse Ciclo</h2>
+                    <p>A boa notícia: <span class="highlight">você pode interromper esse ciclo</span> a qualquer momento!</p>
+                    
+                    <p>O segredo está em <span class="emphasis">perceber quando sua mente se distrai</span> e gentilmente trazê-la de volta.</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Não lute contra os pensamentos:</strong> Eles vão aparecer mesmo</li>
+                        <li><strong class="highlight">Não se julgue:</strong> "Ah, me distraí de novo" é normal</li>
+                        <li><strong class="highlight">Seja gentil consigo:</strong> Como se fosse um/a amigo/a querido/a</li>
+                        <li><strong class="highlight">Volte para o presente:</strong> Respire fundo e foque no agora</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">Cada vez que você faz isso, está treinando sua mente</span> para ficar mais presente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 - Sinais de que você precisa de mais foco -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🚨</div>
+                    <h2>Sinais de Alerta: Você Precisa de Mais Foco</h2>
+                    <p>Reconhece alguns desses sinais na sua vida?</p>
+                    
+                    <div class="two-column">
+                        <div class="column-box green-column">
+                            <h3 style="color: #56D500; margin-bottom: 15px;">No Trabalho</h3>
+                            <ul>
+                                <li>Ler o mesmo e-mail 3 vezes</li>
+                                <li>Esquecer o que estava fazendo</li>
+                                <li>Cometer erros bobos</li>
+                                <li>Procrastinar tarefas importantes</li>
+                                <li>Se sentir sobrecarregado/a</li>
+                            </ul>
+                        </div>
+                        <div class="column-box blue-column">
+                            <h3 style="color: #01BEFF; margin-bottom: 15px;">Em Casa</h3>
+                            <ul>
+                                <li>Não lembrar do que comeu</li>
+                                <li>Assistir TV sem prestar atenção</li>
+                                <li>Conversar no automático</li>
+                                <li>Não conseguir relaxar</li>
+                                <li>Dormir mal, mente acelerada</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p><span class="emphasis">Se você se identificou com vários itens, não se preocupe!</span> Isso é mais comum do que você imagina.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11 - Os benefícios do foco pleno -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">✨</div>
+                    <h2>O que Muda Quando Você Fica Mais Presente</h2>
+                    <p>Os benefícios aparecem rapidinho:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Você erra menos:</strong> Atenção total = menos bobeiras</li>
+                        <li><strong class="highlight">Trabalha melhor:</strong> Foco em uma coisa = resultado de qualidade</li>
+                        <li><strong class="highlight">Fica mais calmo/a:</strong> Mente presente = menos ansiedade</li>
+                        <li><strong class="highlight">Relacionamentos melhoram:</strong> Pessoas sentem quando você está realmente ali</li>
+                        <li><strong class="highlight">Aproveita mais a vida:</strong> Cada momento fica mais rico</li>
+                        <li><strong class="highlight">Dorme melhor:</strong> Mente tranquila = sono reparador</li>
+                        <li><strong class="highlight">Toma decisões melhores:</strong> Clareza mental = escolhas mais acertadas</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">É como se você ligasse um "botão de qualidade"</span> na sua vida!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12 - Começando pequeno -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🌱</div>
+                    <h2>Começando Pequeno: Momentos Simples</h2>
+                    <p>Você não precisa meditar 2 horas por dia! Comece com <span class="highlight">coisas que já faz</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Escovando os dentes:</strong> Sinta a escova, o gosto da pasta, os movimentos</li>
+                        <li><strong class="highlight">Tomando café:</strong> O cheiro, o calor da xícara, o primeiro gole</li>
+                        <li><strong class="highlight">Caminhando:</strong> Sinta os pés tocando o chão, o ar no rosto</li>
+                        <li><strong class="highlight">Esperando o elevador:</strong> Em vez de pegar o celular, respire fundo</li>
+                        <li><strong class="highlight">No banho:</strong> Água quente, cheiro do sabonete, relaxar os músculos</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>A mágica está nos detalhes:</strong> Quando você presta atenção de verdade, até escovar os dentes pode ser relaxante!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13 - Foco pleno no trabalho -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">💼</div>
+                    <h2>Foco Pleno no Trabalho</h2>
+                    <p>Pequenas mudanças que fazem grande diferença:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Uma coisa de cada vez:</strong> E-mail é e-mail. WhatsApp é WhatsApp. Não misture!</li>
+                        <li><strong class="highlight">Pause antes de responder:</strong> Leia tudo antes de começar a digitar</li>
+                        <li><strong class="highlight">Reuniões presentes:</strong> Celular longe, olho no olho, escuta ativa</li>
+                        <li><strong class="highlight">Transições conscientes:</strong> Respire fundo antes de começar uma nova tarefa</li>
+                        <li><strong class="highlight">Almoço sem pressa:</strong> Mastigue devagar, sinta o sabor</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>Teste isso:</strong> Amanhã, escolha UMA tarefa e faça ela com 100% de atenção. Veja como fica diferente!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14 - Foco pleno em casa -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🏠</div>
+                    <h2>Foco Pleno em Casa</h2>
+                    <p>Transforme sua casa num <span class="highlight">refúgio de presença</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Chegada consciente:</strong> Pare na porta, respire, "deixe o trabalho lá fora"</li>
+                        <li><strong class="highlight">Jantar sem TV:</strong> Converse de verdade, saboreie a comida</li>
+                        <li><strong class="highlight">Tempo com filhos/as:</strong> Celular longe, brincadeira com presença total</li>
+                        <li><strong class="highlight">Conversa com parceiro/a:</strong> Olho no olho, escuta sem julgar</li>
+                        <li><strong class="highlight">Tarefas domésticas:</strong> Lavar louça pode ser meditativo!</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>Experimente:</strong> Hoje, quando chegar em casa, pare 30 segundos na porta. Respire fundo e "mude de chip" conscientemente.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15 - Lidando com emoções difíceis -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🌊</div>
+                    <h2>Lidando com Emoções Difíceis</h2>
+                    <p>Quando a <span class="highlight">ansiedade, raiva ou tristeza</span> aparecem:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Não fuja da emoção:</strong> "Ah, estou ansioso/a. Tudo bem, é normal"</li>
+                        <li><strong class="highlight">Respire com ela:</strong> Inspire calma, expire a tensão</li>
+                        <li><strong class="highlight">Localize no corpo:</strong> "Onde sinto isso? No peito? Na barriga?"</li>
+                        <li><strong class="highlight">Seja gentil consigo:</strong> "Está difícil agora, mas vai passar"</li>
+                        <li><strong class="highlight">Volte para o presente:</strong> "O que posso fazer AGORA?"</li>
+                    </ul>
+                    
+                    <div class="note-box">
+                        <strong>Lembre-se:</strong> Emoções são como ondas. Elas vêm, ficam um tempo e vão embora. Você não precisa ser arrastado/a por elas.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16 - A técnica da respiração -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🫁</div>
+                    <h2>Sua Âncora: A Respiração</h2>
+                    <p>A respiração é seu <span class="highlight">"botão de reset"</span> sempre disponível:</p>
+                    
+                    <div class="exercise-box">
+                        <h3 style="color: #01BEFF; margin-bottom: 15px;">Técnica Simples (2 minutos)</h3>
+                        <ol style="font-size: 1.2rem; line-height: 1.8;">
+                            <li>Sente confortável, pés no chão</li>
+                            <li>Feche os olhos ou olhe para baixo</li>
+                            <li>Respire normalmente, sem forçar</li>
+                            <li>Conte: inspire (1), expire (2), inspire (3)...</li>
+                            <li>Se perder a conta, volte para o 1</li>
+                            <li>Quando a mente vagar, volte para a respiração</li>
+                        </ol>
+                    </div>
+                    
+                    <p><span class="emphasis">Use sempre que precisar:</span> antes de reuniões, depois de discussões, quando se sentir sobrecarregado/a.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17 - Exercício prático -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🧘‍♀️</div>
+                    <h2>Vamos Praticar Juntos</h2>
+                    <p><strong class="highlight">Exercício de 3 minutos:</strong></p>
+                    
+                    <div class="exercise-box">
+                        <ol style="font-size: 1.3rem; line-height: 2;">
+                            <li>Sente-se confortavelmente</li>
+                            <li>Feche os olhos suavemente</li>
+                            <li>Respire naturalmente</li>
+                            <li>Observe onde sente a respiração mais claramente</li>
+                            <li>Quando a mente dispersar, gentilmente retorne</li>
+                            <li>Não há certo ou errado, apenas observe</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="note-box">
+                        <strong>Lembre-se:</strong> Se sua mente "voou" 50 vezes, não tem problema. O importante é que você percebeu e voltou 50 vezes!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18 - Obstáculos comuns -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🚧</div>
+                    <h2>Obstáculos Que Você Vai Encontrar</h2>
+                    <p>Todo mundo passa por isso. Você não está sozinho/a:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">"Não tenho tempo":</strong> Comece com 2 minutos. Todo mundo tem 2 minutos!</li>
+                        <li><strong class="highlight">"Minha mente não para":</strong> Perfeito! Essa é exatamente a ideia do treino</li>
+                        <li><strong class="highlight">"Não vejo resultado":</strong> Os benefícios são sutis no início, mas vão crescendo</li>
+                        <li><strong class="highlight">"Sempre esqueço":</strong> Associe com algo que já faz (café, chegada ao trabalho)</li>
+                        <li><strong class="highlight">"Não é para mim":</strong> Cada pessoa tem seu jeito, encontre o seu</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>A verdade:</strong> Não existe pessoa que "não consegue" ser mais presente. Existe apenas falta de prática. Como andar de bicicleta!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19 - Criando novos hábitos -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🔄</div>
+                    <h2>Criando Novos Hábitos</h2>
+                    <p>Como fazer o foco pleno virar <span class="highlight">automático</span>:</p>
+                    
+                    <div class="two-column">
+                        <div class="column-box green-column">
+                            <h3 style="color: #56D500; margin-bottom: 15px;">Semana 1-2</h3>
+                            <ul>
+                                <li>2 minutos de respiração</li>
+                                <li>Uma refeição consciente</li>
+                                <li>Pausa antes de pegar o celular</li>
+                            </ul>
+                        </div>
+                        <div class="column-box blue-column">
+                            <h3 style="color: #01BEFF; margin-bottom: 15px;">Semana 3-4</h3>
+                            <ul>
+                                <li>5 minutos de atenção ao corpo</li>
+                                <li>Caminhada consciente</li>
+                                <li>Escuta ativa nas conversas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="note-box">
+                        <strong>Dica de ouro:</strong> Comece pequeno e seja consistente. É melhor 2 minutos todo dia do que 30 minutos uma vez por semana.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20 - Atenção ao corpo -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🧍‍♂️</div>
+                    <h2>Prestando Atenção no Seu Corpo</h2>
+                    <p>Seu corpo fala com você o tempo todo. <span class="highlight">Você está escutando?</span></p>
+                    
+                    <p><strong class="emphasis">Exercício simples:</strong> Percorra mentalmente seu corpo da cabeça aos pés:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Cabeça:</strong> Está tensa? Relaxe a testa, a mandíbula</li>
+                        <li><strong class="highlight">Pescoço e ombros:</strong> Estão "subindo"? Deixe-os cair</li>
+                        <li><strong class="highlight">Braços e mãos:</strong> Estão contraídos? Solte-os</li>
+                        <li><strong class="highlight">Peito:</strong> Está apertado? Respire mais fundo</li>
+                        <li><strong class="highlight">Barriga:</strong> Está dura? Relaxe</li>
+                        <li><strong class="highlight">Pernas:</strong> Estão tensas? Deixe-as pesadas</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">Faça isso várias vezes ao dia.</span> Seu corpo vai agradecer!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21 - Foco pleno na comunicação -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">💬</div>
+                    <h2>Comunicação com Presença</h2>
+                    <p>Como <span class="highlight">transformar suas conversas</span> com foco pleno:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Escute para entender, não para responder:</strong> Deixe a pessoa terminar</li>
+                        <li><strong class="highlight">Olho no olho:</strong> Celular longe, atenção total na pessoa</li>
+                        <li><strong class="highlight">Pause antes de falar:</strong> Respire, pense, depois responda</li>
+                        <li><strong class="highlight">Perceba o tom:</strong> Não só as palavras, mas como são ditas</li>
+                        <li><strong class="highlight">Valide as emoções:</strong> "Entendo que você está chateado/a"</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>Resultado:</strong> As pessoas vão se sentir realmente ouvidas. Seus relacionamentos vão melhorar drasticamente.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22 - Gerenciando o estresse -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">😤</div>
+                    <h2>Gerenciando o Estresse com Presença</h2>
+                    <p>Quando o <span class="highlight">estresse bater</span>, use essas estratégias:</p>
+                    
+                    <div class="exercise-box">
+                        <h3 style="color: #01BEFF; margin-bottom: 15px;">Técnica STOP</h3>
+                        <ul style="font-size: 1.2rem; line-height: 1.8;">
+                            <li><strong>S</strong> - PARE o que está fazendo</li>
+                            <li><strong>T</strong> - RESPIRE fundo 3 vezes</li>
+                            <li><strong>O</strong> - OBSERVE o que está sentindo</li>
+                            <li><strong>P</strong> - PROSSIGA com mais calma</li>
+                        </ul>
+                    </div>
+                    
+                    <ul>
+                        <li><strong class="highlight">No trânsito:</strong> Em vez de buzinar, respire</li>
+                        <li><strong class="highlight">Na fila:</strong> Em vez de se irritar, observe ao redor</li>
+                        <li><strong class="highlight">Com prazo apertado:</strong> Pare 1 minuto, organize as prioridades</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">O estresse não vai sumir, mas sua reação a ele pode mudar completamente.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23 - Foco pleno e produtividade -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">⚡</div>
+                    <h2>Produtividade com Presença</h2>
+                    <p>Fazer <span class="highlight">menos coisas, mas com mais qualidade</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Escolha 3 prioridades por dia:</strong> Não 10, não 20. Apenas 3.</li>
+                        <li><strong class="highlight">Blocos de tempo:</strong> 25 min focado/a, 5 min de pausa</li>
+                        <li><strong class="highlight">Uma tela por vez:</strong> Feche abas desnecessárias</li>
+                        <li><strong class="highlight">Notificações off:</strong> Você decide quando ver mensagens</li>
+                        <li><strong class="highlight">Termine antes de começar:</strong> Conclua uma tarefa antes da próxima</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>Paradoxo:</strong> Quanto mais presente você fica, mais rápido e melhor você trabalha. Menos pressa, mais resultado!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24 - Foco pleno e relacionamentos -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">❤️</div>
+                    <h2>Relacionamentos Mais Profundos</h2>
+                    <p>Como a presença <span class="highlight">transforma seus relacionamentos</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Com o/a parceiro/a:</strong> 10 minutos de conversa sem celular valem mais que 2 horas distraídos/as</li>
+                        <li><strong class="highlight">Com os/as filhos/as:</strong> Brinque de verdade, sem pensar na louça suja</li>
+                        <li><strong class="highlight">Com amigos/as:</strong> Esteja ali de corpo e alma, não só fisicamente</li>
+                        <li><strong class="highlight">Com colegas:</strong> Escute as ideias sem já estar formulando sua resposta</li>
+                        <li><strong class="highlight">Consigo mesmo/a:</strong> Seja gentil com seus erros e limitações</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>A mágica:</strong> Quando você está realmente presente, as pessoas sentem. Elas se abrem mais, confiam mais, se conectam mais.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25 - Sinais de progresso -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">📈</div>
+                    <h2>Como Saber se Está Funcionando</h2>
+                    <p>Sinais de que você está <span class="highlight">desenvolvendo mais presença</span>:</p>
+                    
+                    <div class="two-column">
+                        <div class="column-box green-column">
+                            <h3 style="color: #56D500; margin-bottom: 15px;">Você Percebe Que:</h3>
+                            <ul>
+                                <li>Lembra mais dos detalhes</li>
+                                <li>Comete menos erros bobos</li>
+                                <li>Se irrita menos com coisas pequenas</li>
+                                <li>Aproveita mais os momentos bons</li>
+                                <li>Dorme melhor</li>
+                            </ul>
+                        </div>
+                        <div class="column-box blue-column">
+                            <h3 style="color: #01BEFF; margin-bottom: 15px;">Outros/as Notam Que:</h3>
+                            <ul>
+                                <li>Você está mais calmo/a</li>
+                                <li>Escuta melhor</li>
+                                <li>Está mais confiável</li>
+                                <li>Parece mais "ali"</li>
+                                <li>É mais agradável estar perto</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p><span class="emphasis">Esses sinais aparecem gradualmente.</span> Seja paciente consigo mesmo/a!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26 - Mantendo a prática -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🎯</div>
+                    <h2>Mantendo a Prática Viva</h2>
+                    <p>Como <span class="highlight">não desistir</span> quando a motivação diminuir:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Comece pequeno:</strong> 2 minutos é melhor que zero</li>
+                        <li><strong class="highlight">Seja consistente:</strong> Todo dia um pouquinho</li>
+                        <li><strong class="highlight">Tenha compaixão:</strong> Vai ter dias ruins, é normal</li>
+                        <li><strong class="highlight">Celebre pequenas vitórias:</strong> "Hoje consegui ficar presente no almoço!"</li>
+                        <li><strong class="highlight">Encontre seu jeito:</strong> Respiração, caminhada, música... o que funciona para você?</li>
+                    </ul>
+                    
+                    <div class="note-box">
+                        <strong>Lembre-se:</strong> Não é sobre ser perfeito/a. É sobre ser um pouquinho mais presente a cada dia.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 27 - Aplicações específicas -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🛠️</div>
+                    <h2>Aplicações Específicas</h2>
+                    <p>Situações do dia a dia onde o foco pleno <span class="highlight">faz toda diferença</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Apresentações:</strong> Respire antes de começar, conecte-se com a audiência</li>
+                        <li><strong class="highlight">Negociações:</strong> Escute as entrelinhas, perceba o que não está sendo dito</li>
+                        <li><strong class="highlight">Conflitos:</strong> Pause antes de reagir, responda em vez de atacar</li>
+                        <li><strong class="highlight">Decisões importantes:</strong> Saia do automático, pense com clareza</li>
+                        <li><strong class="highlight">Momentos de crise:</strong> Mantenha a calma quando todos/as estão perdendo a cabeça</li>
+                    </ul>
+                    
+                    <div class="story-box">
+                        <strong>O diferencial:</strong> Enquanto outros/as reagem no impulso, você responde com sabedoria. Isso te destaca em qualquer ambiente.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 28 - Integrando tudo -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🔗</div>
+                    <h2>Integrando Vida Pessoal e Profissional</h2>
+                    <p>O foco pleno <span class="highlight">conecta todas as áreas da sua vida</span>:</p>
+                    
+                    <ul>
+                        <li><strong class="highlight">Você é uma pessoa só:</strong> A presença que você cultiva em casa te ajuda no trabalho</li>
+                        <li><strong class="highlight">Habilidades transferíveis:</strong> Paciência com os/as filhos/as = paciência com clientes</li>
+                        <li><strong class="highlight">Energia renovada:</strong> Momentos de presença te recarregam para os desafios</li>
+                        <li><strong class="highlight">Clareza de valores:</strong> Você sabe o que realmente importa</li>
+                        <li><strong class="highlight">Equilíbrio natural:</strong> Trabalho e vida pessoal se complementam</li>
+                    </ul>
+                    
+                    <p><span class="emphasis">Resultado:</span> Uma vida mais <span class="highlight">integrada, autêntica e satisfatória</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 29 - Seu plano pessoal -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">📋</div>
+                    <h2>Seu Plano Pessoal de Foco Pleno</h2>
+                    <p>Escolha <span class="highlight">3 práticas</span> para começar esta semana:</p>
+                    
+                    <div class="exercise-box">
+                        <h3 style="color: #01BEFF; margin-bottom: 20px;">Minha Lista Pessoal:</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <h4 style="color: #56D500; margin-bottom: 10px;">No Trabalho:</h4>
+                                <ul style="font-size: 1.1rem;">
+                                    <li>□ 2 min de respiração antes do trabalho</li>
+                                    <li>□ Uma tarefa por vez</li>
+                                    <li>□ Pausa consciente entre reuniões</li>
+                                    <li>□ Almoço sem celular</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="color: #01BEFF; margin-bottom: 10px;">Em Casa:</h4>
+                                <ul style="font-size: 1.1rem;">
+                                    <li>□ Chegada consciente</li>
+                                    <li>□ Jantar presente</li>
+                                    <li>□ Conversa sem distrações</li>
+                                    <li>□ Banho relaxante</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p><span class="emphasis">Comece pequeno, seja consistente, celebre o progresso!</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 30 - Considerações finais -->
+        <div class="slide">
+            <div class="content-slide">
+                <div class="content-box">
+                    <div class="emoji-title">🌟</div>
+                    <h2>O Convite Final</h2>
+                    
+                    <p><span class="highlight">O foco pleno não é um destino, é uma jornada.</span></p>
+                    
+                    <p>Cada momento é uma nova oportunidade de <span class="emphasis">estar presente</span>. Cada respiração é um recomeço.</p>
+                    
+                    <p>Você não precisa ser perfeito/a. Você só precisa <span class="highlight">começar</span>.</p>
+                    
+                    <div class="story-box">
+                        <strong>O convite é simples:</strong> Esteja 100% no que você faz, em cada momento, e perceba a diferença que a atenção plena pode trazer para sua vida pessoal e profissional.
+                    </div>
+                    
+                    <p style="text-align: center; font-size: 1.6rem; margin-top: 30px;">
+                        <span class="highlight">A vida acontece agora.</span><br>
+                        <span class="emphasis">Não perca ela por estar pensando em outro lugar.</span>
+                    </p>
+                    
+                    <p style="text-align: center; font-size: 1.3rem; margin-top: 30px;">
+                        <span class="highlight">Obrigado/a pela sua presença!</span><br>
+                        <span class="emphasis">Que esta prática transforme seu cotidiano.</span>
+                    </p>
+
+                    <div class="download-section">
+                        <button class="download-btn" onclick="downloadPresentation()">
+                            📥 Baixar Apresentação em PPT
+                        </button>
+                        <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                            Clique para baixar todo o conteúdo em formato PowerPoint
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+        </div>
+
+        <!-- Contador de slides -->
+        <div class="slide-counter" id="slideCounter">1 / 30</div>
+
+        <!-- Barra de progresso -->
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function updateSlide() {
+            // Remove active de todos os slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Adiciona active ao slide atual
+            slides[currentSlide].classList.add('active');
+            
+            // Atualiza contador
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Atualiza botões
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Mostra/esconde header (aparece do slide 2 em diante)
+            const header = document.getElementById('header');
+            if (currentSlide >= 1) {
+                header.classList.add('show');
+                slides[currentSlide].classList.add('with-header');
+            } else {
+                header.classList.remove('show');
+                slides[currentSlide].classList.remove('with-header');
+            }
+            
+            // Atualiza barra de progresso
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            } else if (direction === -1 && currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function downloadPresentation() {
+            // Cria o conteúdo da apresentação em formato texto
+            const presentationContent = `
+FOCO PLENO - APRESENTAÇÃO COMPLETA
+"A atenção que protege. O cuidado que transforma."
+
+SLIDE 1 - CAPA
+Foco Pleno
+"A atenção que protege. O cuidado que transforma."
+Uma jornada prática: Como estar presente pode transformar sua vida pessoal e profissional
+
+SLIDE 2 - O QUE É FOCO PLENO?
+🎯 O que é Foco Pleno?
+
+Imagine que você está assistindo seu filme favorito. Você esquece do celular, dos problemas, do tempo passando. Você está 100% ali, vivendo aquele momento.
+
+O foco pleno é exatamente isso: estar completamente presente no que você está fazendo agora.
+
+Não é sobre esvaziar a mente ou virar um/a monge/monja. É sobre escolher onde colocar sua atenção e ficar ali de verdade.
+
+SLIDE 3 - POR QUE NOSSA MENTE SE DISTRAI?
+🧠 Por que Nossa Mente "Voa"?
+
+Nosso cérebro foi programado para sobreviver, não para se concentrar. Ele está sempre:
+
+• Procurando perigos: "E se acontecer isso ou aquilo?"
+• Lembrando do passado: "Nossa, como eu fui burro/a naquela situação..."
+• Planejando o futuro: "Preciso fazer isso, aquilo, mais aquilo..."
+• Comparando tudo: "Fulano/a tem uma vida melhor que a minha"
+
+É normal a mente fazer isso! Mas podemos ensinar ela a ficar mais tempo no presente.
+
+SLIDE 4 - O CUSTO DA DISTRAÇÃO
+💸 O Preço de Viver no "Piloto Automático"
+
+Quando não estamos presentes, pagamos um preço alto:
+
+• No trabalho: Erros bobos, retrabalho, estresse desnecessário
+• Em casa: Brigas por mal-entendidos, filhos/as que se sentem ignorados/as
+• Com a saúde: Comer sem perceber, não notar sinais do corpo
+• Nos relacionamentos: Conversas vazias, pessoas se sentindo desvalorizadas
+• Com você mesmo/a: Ansiedade, sensação de que a vida está passando
+
+Você já passou por isso? Chegou em casa e não lembra da viagem? Comeu algo e não sentiu o gosto? Alguém falou com você e você teve que pedir para repetir?
+
+SLIDE 5 - COMO A VIDA PESSOAL AFETA O TRABALHO
+🏠➡️🏢 Quando os Problemas de Casa Vão para o Trabalho
+
+Você já tentou "deixar os problemas em casa"? É quase impossível, né?
+
+• Briga com o/a parceiro/a de manhã: Você fica remoendo o dia todo, erra cálculos, esquece compromissos
+• Filho/a doente: Sua cabeça está no hospital, não na reunião
+• Conta no vermelho: A ansiedade não deixa você se concentrar em nada
+• Problema familiar: Você está fisicamente presente, mas mentalmente ausente
+
+A verdade é: Somos uma pessoa só. Não dá para dividir nossa mente em compartimentos estanques. O que acontece em casa afeta o trabalho, e vice-versa.
+
+SLIDE 6 - COMO O TRABALHO AFETA A VIDA PESSOAL
+🏢➡️🏠 Quando o Trabalho Invade Sua Casa
+
+O caminho contrário também acontece:
+
+• Chefe estressado/a: Você chega em casa irritado/a e desconta na família
+• Prazo apertado: Você não consegue relaxar, nem no fim de semana
+• Reunião que deu errado: Você fica remoendo, não consegue dormir
+• Medo de ser demitido/a: A ansiedade afeta seu humor, seu sono, seus relacionamentos
+
+Resultado: Você está sempre "ligado/a", nunca realmente descansa. Sua família sente que você está distante, mesmo estando ali do lado.
+
+SLIDE 7 - AS EMOÇÕES QUE MAIS ATRAPALHAM
+😰 As Emoções que "Sequestram" Nossa Atenção
+
+Algumas emoções são como ladrões da nossa concentração:
+
+• Ansiedade: "E se der errado? E se eu não conseguir?"
+• Raiva: "Como ele/ela pôde fazer isso comigo?"
+• Tristeza: "Nada dá certo na minha vida"
+• Medo: "Vou ser julgado/a, vou passar vergonha"
+• Culpa: "Eu deveria ter feito diferente"
+• Inveja: "Por que com os/as outros/as é mais fácil?"
+
+Essas emoções são normais! O problema é quando elas tomam conta da nossa mente e não conseguimos mais focar no que importa.
+
+SLIDE 8 - O CICLO VICIOSO
+🌀 O Ciclo Vicioso da Distração
+
+Veja como funciona esse ciclo que nos prende:
+
+1. Algo te incomoda (problema, emoção forte)
+2. Você se distrai (mente vai para outro lugar)
+3. Você erra ou esquece algo (consequência da distração)
+4. Você se sente pior (culpa, ansiedade, raiva)
+5. Volta para o passo 1 (mais distração ainda)
+
+Exemplo real: Você está preocupado/a com dinheiro → se distrai na reunião → esquece de anotar algo importante → o/a chefe fica bravo/a → você fica mais ansioso/a ainda → se distrai mais...
+
+SLIDE 9 - QUEBRANDO O CICLO
+🔓 Como Quebrar Esse Ciclo
+
+A boa notícia: você pode interromper esse ciclo a qualquer momento!
+
+O segredo está em perceber quando sua mente se distrai e gentilmente trazê-la de volta.
+
+• Não lute contra os pensamentos: Eles vão aparecer mesmo
+• Não se julgue: "Ah, me distraí de novo" é normal
+• Seja gentil consigo: Como se fosse um/a amigo/a querido/a
+• Volte para o presente: Respire fundo e foque no agora
+
+Cada vez que você faz isso, está treinando sua mente para ficar mais presente.
+
+SLIDE 10 - SINAIS DE QUE VOCÊ PRECISA DE MAIS FOCO
+🚨 Sinais de Alerta: Você Precisa de Mais Foco
+
+Reconhece alguns desses sinais na sua vida?
+
+NO TRABALHO:
+• Ler o mesmo e-mail 3 vezes
+• Esquecer o que estava fazendo
+• Cometer erros bobos
+• Procrastinar tarefas importantes
+• Se sentir sobrecarregado/a
+
+EM CASA:
+• Não lembrar do que comeu
+• Assistir TV sem prestar atenção
+• Conversar no automático
+• Não conseguir relaxar
+• Dormir mal, mente acelerada
+
+Se você se identificou com vários itens, não se preocupe! Isso é mais comum do que você imagina.
+
+SLIDE 11 - OS BENEFÍCIOS DO FOCO PLENO
+✨ O que Muda Quando Você Fica Mais Presente
+
+Os benefícios aparecem rapidinho:
+
+• Você erra menos: Atenção total = menos bobeiras
+• Trabalha melhor: Foco em uma coisa = resultado de qualidade
+• Fica mais calmo/a: Mente presente = menos ansiedade
+• Relacionamentos melhoram: Pessoas sentem quando você está realmente ali
+• Aproveita mais a vida: Cada momento fica mais rico
+• Dorme melhor: Mente tranquila = sono reparador
+• Toma decisões melhores: Clareza mental = escolhas mais acertadas
+
+É como se você ligasse um "botão de qualidade" na sua vida!
+
+SLIDE 12 - COMEÇANDO PEQUENO
+🌱 Começando Pequeno: Momentos Simples
+
+Você não precisa meditar 2 horas por dia! Comece com coisas que já faz:
+
+• Escovando os dentes: Sinta a escova, o gosto da pasta, os movimentos
+• Tomando café: O cheiro, o calor da xícara, o primeiro gole
+• Caminhando: Sinta os pés tocando o chão, o ar no rosto
+• Esperando o elevador: Em vez de pegar o celular, respire fundo
+• No banho: Água quente, cheiro do sabonete, relaxar os músculos
+
+A mágica está nos detalhes: Quando você presta atenção de verdade, até escovar os dentes pode ser relaxante!
+
+SLIDE 13 - FOCO PLENO NO TRABALHO
+💼 Foco Pleno no Trabalho
+
+Pequenas mudanças que fazem grande diferença:
+
+• Uma coisa de cada vez: E-mail é e-mail. WhatsApp é WhatsApp. Não misture!
+• Pause antes de responder: Leia tudo antes de começar a digitar
+• Reuniões presentes: Celular longe, olho no olho, escuta ativa
+• Transições conscientes: Respire fundo antes de começar uma nova tarefa
+• Almoço sem pressa: Mastigue devagar, sinta o sabor
+
+Teste isso: Amanhã, escolha UMA tarefa e faça ela com 100% de atenção. Veja como fica diferente!
+
+SLIDE 14 - FOCO PLENO EM CASA
+🏠 Foco Pleno em Casa
+
+Transforme sua casa num refúgio de presença:
+
+• Chegada consciente: Pare na porta, respire, "deixe o trabalho lá fora"
+• Jantar sem TV: Converse de verdade, saboreie a comida
+• Tempo com filhos/as: Celular longe, brincadeira com presença total
+• Conversa com parceiro/a: Olho no olho, escuta sem julgar
+• Tarefas domésticas: Lavar louça pode ser meditativo!
+
+Experimente: Hoje, quando chegar em casa, pare 30 segundos na porta. Respire fundo e "mude de chip" conscientemente.
+
+SLIDE 15 - LIDANDO COM EMOÇÕES DIFÍCEIS
+🌊 Lidando com Emoções Difíceis
+
+Quando a ansiedade, raiva ou tristeza aparecem:
+
+• Não fuja da emoção: "Ah, estou ansioso/a. Tudo bem, é normal"
+• Respire com ela: Inspire calma, expire a tensão
+• Localize no corpo: "Onde sinto isso? No peito? Na barriga?"
+• Seja gentil consigo: "Está difícil agora, mas vai passar"
+• Volte para o presente: "O que posso fazer AGORA?"
+
+Lembre-se: Emoções são como ondas. Elas vêm, ficam um tempo e vão embora. Você não precisa ser arrastado/a por elas.
+
+SLIDE 16 - A TÉCNICA DA RESPIRAÇÃO
+🫁 Sua Âncora: A Respiração
+
+A respiração é seu "botão de reset" sempre disponível:
+
+TÉCNICA SIMPLES (2 minutos):
+1. Sente confortável, pés no chão
+2. Feche os olhos ou olhe para baixo
+3. Respire normalmente, sem forçar
+4. Conte: inspire (1), expire (2), inspire (3)...
+5. Se perder a conta, volte para o 1
+6. Quando a mente vagar, volte para a respiração
+
+Use sempre que precisar: antes de reuniões, depois de discussões, quando se sentir sobrecarregado/a.
+
+SLIDE 17 - EXERCÍCIO PRÁTICO
+🧘‍♀️ Vamos Praticar Juntos
+
+Exercício de 3 minutos:
+
+1. Sente-se confortavelmente
+2. Feche os olhos suavemente
+3. Respire naturalmente
+4. Observe onde sente a respiração mais claramente
+5. Quando a mente dispersar, gentilmente retorne
+6. Não há certo ou errado, apenas observe
+
+Lembre-se: Se sua mente "voou" 50 vezes, não tem problema. O importante é que você percebeu e voltou 50 vezes!
+
+SLIDE 18 - OBSTÁCULOS COMUNS
+🚧 Obstáculos Que Você Vai Encontrar
+
+Todo mundo passa por isso. Você não está sozinho/a:
+
+• "Não tenho tempo": Comece com 2 minutos. Todo mundo tem 2 minutos!
+• "Minha mente não para": Perfeito! Essa é exatamente a ideia do treino
+• "Não vejo resultado": Os benefícios são sutis no início, mas vão crescendo
+• "Sempre esqueço": Associe com algo que já faz (café, chegada ao trabalho)
+• "Não é para mim": Cada pessoa tem seu jeito, encontre o seu
+
+A verdade: Não existe pessoa que "não consegue" ser mais presente. Existe apenas falta de prática. Como andar de bicicleta!
+
+SLIDE 19 - CRIANDO NOVOS HÁBITOS
+🔄 Criando Novos Hábitos
+
+Como fazer o foco pleno virar automático:
+
+SEMANA 1-2:
+• 2 minutos de respiração
+• Uma refeição consciente
+• Pausa antes de pegar o celular
+
+SEMANA 3-4:
+• 5 minutos de atenção ao corpo
+• Caminhada consciente
+• Escuta ativa nas conversas
+
+Dica de ouro: Comece pequeno e seja consistente. É melhor 2 minutos todo dia do que 30 minutos uma vez por semana.
+
+SLIDE 20 - ATENÇÃO AO CORPO
+🧍‍♂️ Prestando Atenção no Seu Corpo
+
+Seu corpo fala com você o tempo todo. Você está escutando?
+
+Exercício simples: Percorra mentalmente seu corpo da cabeça aos pés:
+
+• Cabeça: Está tensa? Relaxe a testa, a mandíbula
+• Pescoço e ombros: Estão "subindo"? Deixe-os cair
+• Braços e mãos: Estão contraídos? Solte-os
+• Peito: Está apertado? Respire mais fundo
+• Barriga: Está dura? Relaxe
+• Pernas: Estão tensas? Deixe-as pesadas
+
+Faça isso várias vezes ao dia. Seu corpo vai agradecer!
+
+SLIDE 21 - FOCO PLENO NA COMUNICAÇÃO
+💬 Comunicação com Presença
+
+Como transformar suas conversas com foco pleno:
+
+• Escute para entender, não para responder: Deixe a pessoa terminar
+• Olho no olho: Celular longe, atenção total na pessoa
+• Pause antes de falar: Respire, pense, depois responda
+• Perceba o tom: Não só as palavras, mas como são ditas
+• Valide as emoções: "Entendo que você está chateado/a"
+
+Resultado: As pessoas vão se sentir realmente ouvidas. Seus relacionamentos vão melhorar drasticamente.
+
+SLIDE 22 - GERENCIANDO O ESTRESSE
+😤 Gerenciando o Estresse com Presença
+
+Quando o estresse bater, use essas estratégias:
+
+TÉCNICA STOP:
+• S - PARE o que está fazendo
+• T - RESPIRE fundo 3 vezes
+• O - OBSERVE o que está sentindo
+• P - PROSSIGA com mais calma
+
+• No trânsito: Em vez de buzinar, respire
+• Na fila: Em vez de se irritar, observe ao redor
+• Com prazo apertado: Pare 1 minuto, organize as prioridades
+
+O estresse não vai sumir, mas sua reação a ele pode mudar completamente.
+
+SLIDE 23 - FOCO PLENO E PRODUTIVIDADE
+⚡ Produtividade com Presença
+
+Fazer menos coisas, mas com mais qualidade:
+
+• Escolha 3 prioridades por dia: Não 10, não 20. Apenas 3.
+• Blocos de tempo: 25 min focado/a, 5 min de pausa
+• Uma tela por vez: Feche abas desnecessárias
+• Notificações off: Você decide quando ver mensagens
+• Termine antes de começar: Conclua uma tarefa antes da próxima
+
+Paradoxo: Quanto mais presente você fica, mais rápido e melhor você trabalha. Menos pressa, mais resultado!
+
+SLIDE 24 - FOCO PLENO E RELACIONAMENTOS
+❤️ Relacionamentos Mais Profundos
+
+Como a presença transforma seus relacionamentos:
+
+• Com o/a parceiro/a: 10 minutos de conversa sem celular valem mais que 2 horas distraídos/as
+• Com os/as filhos/as: Brinque de verdade, sem pensar na louça suja
+• Com amigos/as: Esteja ali de corpo e alma, não só fisicamente
+• Com colegas: Escute as ideias sem já estar formulando sua resposta
+• Consigo mesmo/a: Seja gentil com seus erros e limitações
+
+A mágica: Quando você está realmente presente, as pessoas sentem. Elas se abrem mais, confiam mais, se conectam mais.
+
+SLIDE 25 - SINAIS DE PROGRESSO
+📈 Como Saber se Está Funcionando
+
+Sinais de que você está desenvolvendo mais presença:
+
+VOCÊ PERCEBE QUE:
+• Lembra mais dos detalhes
+• Comete menos erros bobos
+• Se irrita menos com coisas pequenas
+• Aproveita mais os momentos bons
+• Dorme melhor
+
+OUTROS/AS NOTAM QUE:
+• Você está mais calmo/a
+• Escuta melhor
+• Está mais confiável
+• Parece mais "ali"
+• É mais agradável estar perto
+
+Esses sinais aparecem gradualmente. Seja paciente consigo mesmo/a!
+
+SLIDE 26 - MANTENDO A PRÁTICA
+🎯 Mantendo a Prática Viva
+
+Como não desistir quando a motivação diminuir:
+
+• Comece pequeno: 2 minutos é melhor que zero
+• Seja consistente: Todo dia um pouquinho
+• Tenha compaixão: Vai ter dias ruins, é normal
+• Celebre pequenas vitórias: "Hoje consegui ficar presente no almoço!"
+• Encontre seu jeito: Respiração, caminhada, música... o que funciona para você?
+
+Lembre-se: Não é sobre ser perfeito/a. É sobre ser um pouquinho mais presente a cada dia.
+
+SLIDE 27 - APLICAÇÕES ESPECÍFICAS
+🛠️ Aplicações Específicas
+
+Situações do dia a dia onde o foco pleno faz toda diferença:
+
+• Apresentações: Respire antes de começar, conecte-se com a audiência
+• Negociações: Escute as entrelinhas, perceba o que não está sendo dito
+• Conflitos: Pause antes de reagir, responda em vez de atacar
+• Decisões importantes: Saia do automático, pense com clareza
+• Momentos de crise: Mantenha a calma quando todos/as estão perdendo a cabeça
+
+O diferencial: Enquanto outros/as reagem no impulso, você responde com sabedoria. Isso te destaca em qualquer ambiente.
+
+SLIDE 28 - INTEGRANDO TUDO
+🔗 Integrando Vida Pessoal e Profissional
+
+O foco pleno conecta todas as áreas da sua vida:
+
+• Você é uma pessoa só: A presença que você cultiva em casa te ajuda no trabalho
+• Habilidades transferíveis: Paciência com os/as filhos/as = paciência com clientes
+• Energia renovada: Momentos de presença te recarregam para os desafios
+• Clareza de valores: Você sabe o que realmente importa
+• Equilíbrio natural: Trabalho e vida pessoal se complementam
+
+Resultado: Uma vida mais integrada, autêntica e satisfatória.
+
+SLIDE 29 - SEU PLANO PESSOAL
+📋 Seu Plano Pessoal de Foco Pleno
+
+Escolha 3 práticas para começar esta semana:
+
+NO TRABALHO:
+□ 2 min de respiração antes do trabalho
+□ Uma tarefa por vez
+□ Pausa consciente entre reuniões
+□ Almoço sem celular
+
+EM CASA:
+□ Chegada consciente
+□ Jantar presente
+□ Conversa sem distrações
+□ Banho relaxante
+
+Comece pequeno, seja consistente, celebre o progresso!
+
+SLIDE 30 - CONSIDERAÇÕES FINAIS
+🌟 O Convite Final
+
+O foco pleno não é um destino, é uma jornada.
+
+Cada momento é uma nova oportunidade de estar presente. Cada respiração é um recomeço.
+
+Você não precisa ser perfeito/a. Você só precisa começar.
+
+O convite é simples: Esteja 100% no que você faz, em cada momento, e perceba a diferença que a atenção plena pode trazer para sua vida pessoal e profissional.
+
+A vida acontece agora.
+Não perca ela por estar pensando em outro lugar.
+
+Obrigado/a pela sua presença!
+Que esta prática transforme seu cotidiano.
+
+---
+FIM DA APRESENTAÇÃO
+Total: 30 slides sobre Foco Pleno
+"A atenção que protege. O cuidado que transforma."
+            `;
+
+            // Cria um blob com o conteúdo
+            const blob = new Blob([presentationContent], { type: 'text/plain;charset=utf-8' });
+            
+            // Cria um link para download
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Foco_Pleno_Apresentacao_Completa.txt';
+            
+            // Simula o clique para iniciar o download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Limpa o URL do objeto
+            URL.revokeObjectURL(link.href);
+            
+            // Feedback visual
+            const btn = document.querySelector('.download-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✅ Download Iniciado!';
+            btn.style.background = '#56D500';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = 'linear-gradient(135deg, #56D500, #01BEFF)';
+            }, 2000);
+        }
+
+        // Navegação por teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                changeSlide(-1);
+            }
+        });
+
+        // Inicializar
+        updateSlide();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c23b29b271f1ab',t:'MTc1NzM3NDE5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
